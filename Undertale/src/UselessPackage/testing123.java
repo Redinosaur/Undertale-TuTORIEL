@@ -4,14 +4,20 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import javax.swing.SwingWorker;
 
 
 public class testing123 {
+	
+	boolean rightPressed = false;
+	boolean leftPressed = false;
+	boolean upPressed = false;
+	boolean downPressed = false;
+	
+	String bip  = "/songs/flowey.wav";
 
 	private JFrame frame;
 	JLabel heart;
@@ -37,6 +43,7 @@ public class testing123 {
 	 */
 	public testing123() {
 		initialize();
+		movePlayer.execute();
 	}
 
 	/**
@@ -50,7 +57,7 @@ public class testing123 {
 		
 		JLabel dialogue = new JLabel("");
 		dialogue.setIcon(new ImageIcon(testing123.class.getResource("/images/white1.png")));
-		dialogue.setBounds(229, 173, 178, 204);
+		dialogue.setBounds(229, 216, 178, 161);
 		frame.getContentPane().add(dialogue);
 		
 		JLabel flowey = new JLabel("");
@@ -63,7 +70,8 @@ public class testing123 {
 		pellet.setBounds(219, 96, 21, 23);
 		frame.getContentPane().add(pellet);
 		
-		JLabel bubble = new JLabel("");
+		JLabel bubble = new JLabel("  ");
+		bubble.setBackground(Color.WHITE);
 		bubble.setIcon(new ImageIcon(testing123.class.getResource("/images/bubble.png")));
 		bubble.setBounds(376, 60, 209, 127);
 		frame.getContentPane().add(bubble);
@@ -77,54 +85,99 @@ public class testing123 {
 		
 		}
 	
+	SwingWorker<Object, Object> movePlayer = new SwingWorker<Object, Object>()
+	{
+	@Override 
+	protected Object doInBackground() throws Exception 
+	{
+		while(true)
+		{
+			if(rightPressed)
+			{
+				heart.setLocation(heart.getX() + 2, heart.getY());
+			}
+			
+			if(leftPressed)
+			{
+				heart.setLocation(heart.getX() - 2, heart.getY());
+			}
+			
+			if(upPressed)
+			{
+				heart.setLocation(heart.getX(), heart.getY() - 2);
+			}
+			
+			if(downPressed)
+			{
+				heart.setLocation(heart.getX(), heart.getY() + 2);
+			}
+			Thread.sleep(16);
+		}
+	
+	}
+	};
+
+	
+	
 		class keyListener implements KeyListener
 		{
-		public void keyPressed(KeyEvent e) 
+		public void keyPressed(KeyEvent e)
 		{
 			
-			
+				if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+				{
+					rightPressed = true;
+				}
+				
+				if(e.getKeyCode() == KeyEvent.VK_LEFT)
+				{
+					leftPressed = true;
+				}
+				
+				if(e.getKeyCode() == KeyEvent.VK_UP)
+				{
+					upPressed = true;	
+	
+				}
+				
+				if(e.getKeyCode() == KeyEvent.VK_DOWN)
+				{
+					downPressed = true;
+				}
 		}
 
 		@Override
-		public void keyReleased(KeyEvent e) {
+		public void keyReleased(KeyEvent e)
+		{
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT)
 			{
-				System.out.println("You went right");
-				heart.setLocation(heart.getX() + 6, heart.getY());	
-				heart.repaint();
+				rightPressed = false;
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_LEFT)
 			{
-				System.out.println("You went left");
-				heart.setLocation(heart.getX() - 6, heart.getY());	
-				heart.repaint();
+				leftPressed = false;
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_UP)
 			{
-				System.out.println("You went up");	
-				heart.setLocation(heart.getX(), heart.getY() - 6);	
-				heart.repaint();
-
+				upPressed = false;	
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_DOWN)
 			{
-				System.out.println("You went down");	
-				heart.setLocation(heart.getX(), heart.getY() + 6);	
-				heart.repaint();
-
+				downPressed = false;
 			}
 			
 		}
 
 		@Override
-		public void keyTyped(KeyEvent e) {
+		public void keyTyped(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}
 		}
+
 	
 	
 }
