@@ -1,5 +1,11 @@
 package lib;
 
+/**
+ * This class is a list of file name constants
+ * 
+ * @author Alden Bauman
+ *
+ */
 public class Constants
 {
 	public static String fightImage = "/images/fightHandMade.png";
@@ -10,5 +16,9 @@ public class Constants
 	public static String actSelected = "/images/actSelected.png";
 	public static String itemSelected = "/images/itemSelected.png";
 	public static String mercySelected = "/images/mercySelected.png";
-	public static String backgroundLines = "/images/backgroundLines.png";
+	public static String battleBox = "/images/BattleBox.png";
+	public static String heart = "/images/heart.png";
+	public static String healthFull = "/images/healthFull.png";
+	public static String healthEmpty = "/images/healthEmpty.png";
+	public static String healthSans = "/images/healthSans.png";
 }
