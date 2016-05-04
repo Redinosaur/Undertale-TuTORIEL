@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.lang.*;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -41,6 +42,7 @@ public class testing123 {
 	String string12 = new String("Little white... 'friendliness pellets.'");
 	String string13 = new String("Are you ready?");
 	String string14 = new String("Move around!  Get as many as you can!");
+	String string15 = new String("...");
 
 
 
@@ -65,11 +67,16 @@ public class testing123 {
 	private ArrayList <String> allTheText = new ArrayList <String> ();
 	private ArrayList <JLabel> text = new ArrayList <JLabel> ();
 	private ArrayList <JLabel> pellets = new ArrayList <JLabel> ();
-	int count = 0, num = 0, count2 = 0, num2 = 0, line = 0, skip = 1;
+	int count = 0, countMove = 0, countMove2 = 0, num = 0, count2 = 0, num2 = 0, line = 0, skip = 1;
 	private int paragraph = 9;
 	private int movePellets,movePellets2 = 0;
 	boolean fire = false;
 	boolean spin = false;
+	boolean upsideDown = false;
+	
+	final int width = 21;
+	final int height = 23;
+	int spinners = 0;
 		
 	String bip  = "/songs/flowey.wav";
 	Clip audioClips;
@@ -134,6 +141,7 @@ public class testing123 {
 		allTheText.add(string12);
 		allTheText.add(string13);
 		allTheText.add(string14);
+		allTheText.add(string15);
 		
 		textBox.add(allTheText.get(paragraph));
 		
@@ -142,7 +150,7 @@ public class testing123 {
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel healthBar = new JLabel("New label");
+		JLabel healthBar = new JLabel("  ");
 		healthBar.setIcon(new ImageIcon(testing123.class.getResource("/images/health11.png")));
 		healthBar.setBounds(195, 375, 257, 42);
 		frame.getContentPane().add(healthBar);
@@ -189,6 +197,11 @@ public class testing123 {
 		bubble.setBounds(376, 60, 246, 127);
 		frame.getContentPane().add(bubble);
 		bubble.setText("test");
+		
+		black = new JLabel(" ");
+		black.setIcon(new ImageIcon(testing123.class.getResource("/images/black.png")));
+		black.setBounds(0, 375, 632, 80);
+		frame.getContentPane().add(black);
 		frame.setBounds(100, 100, 648, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -257,6 +270,16 @@ public class testing123 {
 	{
 		while(true)
 		{
+			spinners++;
+			if(upsideDown == false)
+			{
+				pellets.get(0).setIcon(new ImageIcon(testing123.class.getResource(pelletpath)));
+				pellets.get(1).setIcon(new ImageIcon(testing123.class.getResource(pelletpath)));
+				pellets.get(2).setIcon(new ImageIcon(testing123.class.getResource(pelletpath)));
+				pellets.get(3).setIcon(new ImageIcon(testing123.class.getResource(pelletpath)));
+				pellets.get(4).setIcon(new ImageIcon(testing123.class.getResource(pelletpath)));
+			}
+			
 			
 			if (wink  == true)
 			{
@@ -273,7 +296,7 @@ public class testing123 {
 						{
 							pellets.get(i).setLocation(pellets.get(i).getX() + i - pellets.size() / 2, pellets.get(i).getY() + i);
 						}
-						Thread.sleep(3);
+						Thread.sleep(2);
 					}//end of for loop
 					movePellets++;
 				}
@@ -346,7 +369,7 @@ public class testing123 {
 			}
 			
 			count++;
-			Thread.sleep(20);
+			Thread.sleep(10);
 			if (!wink)
 			{
 				if (num % 4 == 0)
@@ -359,7 +382,7 @@ public class testing123 {
 				}
 			}
 			
-			for (int x = 0; x < pellets.size(); x++)
+			/*for (int x = 0; x < pellets.size(); x++)
 			{
 				if (spin)
 				{
@@ -369,34 +392,67 @@ public class testing123 {
 				{
 					pellets.get(x).setIcon(new ImageIcon(testing123.class.getResource(pelletpath2)));
 				}
-			}
+			}*/
 			
 			if(paragraph == 14)
 			{
-				if (movePellets2 < 50)
+				if (movePellets2 < 700)
 				{
-					for (int i = 0; i < pellets.size(); i++)
+					for (int i = 0; i < pellets.size() * 5; i++)
 					{
+						if(countMove % 45 == 0)
+						{
+		
+							//if (i < pellets.size() / 2)
+							//{
+						pellets.get(0).setLocation(pellets.get(0).getX() + 2, pellets.get(0).getY() + pellets.size() + 1);
+						pellets.get(1).setLocation(pellets.get(1).getX() + 1, pellets.get(1).getY() + pellets.size() + 2);
+						pellets.get(2).setLocation(pellets.get(2).getX() + 0, pellets.get(2).getY() + pellets.size() + 3);
+						pellets.get(3).setLocation(pellets.get(3).getX() - 1, pellets.get(3).getY() + pellets.size() + 2);
+						pellets.get(4).setLocation(pellets.get(4).getX() - 2, pellets.get(4).getY() + pellets.size() + 1);
+		
+							//}
+							//else
+							//{
+							//pellets.get(i).setLocation(pellets.get(i).getX(), pellets.get(i).getY() + i + 2);
+							//}
 
-						if (i < pellets.size() / 2)
-						{
-							pellets.get(i).setLocation(pellets.get(i).getX() + i - pellets.size() / 2, pellets.get(i).getY() + pellets.size() - i - 1);
 						}
-						else
-						{
-							pellets.get(i).setLocation(pellets.get(i).getX() + i - pellets.size() / 2, pellets.get(i).getY() + i);
-						}
-					
+						countMove++;
 					} //end of for loop
+										
 					
 					movePellets2++;
 				}
+			}
+				
+			if(spinners % 6 == 0)			
+			{
+				pellets.get(0).setIcon(new ImageIcon(testing123.class.getResource(pelletpath2)));
+				pellets.get(1).setIcon(new ImageIcon(testing123.class.getResource(pelletpath2)));
+				pellets.get(2).setIcon(new ImageIcon(testing123.class.getResource(pelletpath2)));
+				pellets.get(3).setIcon(new ImageIcon(testing123.class.getResource(pelletpath2)));
+				pellets.get(4).setIcon(new ImageIcon(testing123.class.getResource(pelletpath2)));
+				
+				if(upsideDown == true)
+				{
+					upsideDown = false;
+				}
+				
+				else if(upsideDown == false)
+				{
+					upsideDown = true;
+				}
+			}
+			if(heart.getX()  == pellets.get(0).getX() || heart.getX() == pellets.get(1).getX() || heart.getX() == pellets.get(2).getX() || heart.getX() == pellets.get(3).getX() || heart.getX() == pellets.get(4).getX())
+			{
 			}
 			
 		} // end while
 	
 	} // end object
 	};
+	private JLabel black;
 	
 		class keyListener implements KeyListener
 		{
